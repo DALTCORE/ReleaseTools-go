@@ -2,23 +2,23 @@ package main
 
 import (
 	"context"
-	"github.com/fatih/color"
 	"github.com/google/go-github/github"
-	"os"
 	"runtime"
+	"os"
+	"github.com/fatih/color"
 )
 
 func getAssetByOs() string {
 	if runtime.GOOS == "windows" {
-		return "release-tools-windows-amd64.exe"
+		return "release-tool-windows-amd64.exe"
 	}
 
 	if runtime.GOOS == "linux" {
-		return "release-tools-linux-amd64"
+		return "release-tool-linux-amd64"
 	}
 
 	if runtime.GOOS == "darwin" {
-		return "release-tools-darwin-amd64"
+		return "release-tool-darwin-amd64"
 	}
 
 	return "unknown"
