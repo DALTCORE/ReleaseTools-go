@@ -355,7 +355,7 @@ func main() {
 					mrid,
 				})
 
-				var fileName string = filepath.FromSlash(ChangelogUnreleasedDirectory() + DirSep() + mrid + "-" + ExecGit("branch") + ".yaml")
+				var fileName string = filepath.FromSlash(ChangelogUnreleasedDirectory() + DirSep() + mrid + "-" + GetCurrentBranch() + ".yaml")
 
 				if c.IsSet("dry-run") {
 					fmt.Println("")
@@ -379,7 +379,7 @@ func main() {
 					}
 
 					if FileExists(fileName) && c.IsSet("force") == false {
-						color.Red("File " + mrid + "-" + ExecGit("branch") + ".yaml already exists.")
+						color.Red("File " + mrid + "-" + GetCurrentBranch() + ".yaml already exists.")
 						os.Exit(1)
 					}
 
