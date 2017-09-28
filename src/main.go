@@ -279,7 +279,6 @@ func main() {
 				if checkIfUpdateAvailible() || c.IsSet("force") {
 					fmt.Println("Going to update...")
 					downloadUrl := getAssetDownloadUrl()
-					os.Exit(1)
 
 					fmt.Println("Downloading...")
 					resp, err := http.Get(downloadUrl)
