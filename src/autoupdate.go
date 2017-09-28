@@ -41,7 +41,7 @@ func getAssetDownloadUrl() string {
 	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
 
 	for _, element := range tags {
-		if RTVERSION != element.GetName() {
+		if RTVERSION == element.GetName() {
 			color.Red("%v", "Cannot update release-tool. Current version " + RTVERSION + " equals update version " + element.GetName())
 			os.Exit(128)
 		}

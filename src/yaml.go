@@ -55,7 +55,7 @@ func ConfigFile() ConfigHolder {
 
 	b, err := ioutil.ReadFile(ReleaseToolsConfigFile()) // just pass the file name
 	if err != nil {
-		fmt.Print(err)
+		// fmt.Print(err)
 	}
 
 	err = yaml.Unmarshal(b, &p2)
