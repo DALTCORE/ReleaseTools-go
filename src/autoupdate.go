@@ -33,14 +33,14 @@ func getAssetDownloadUrl() string {
 		PerPage: 1,
 	}
 
-	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools", &opt)
+	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
 	for _, element := range tags {
 		if RTVERSION != element.GetName() {
-			color.Red("%v", "Cannot update release-tool. Current version "+RTVERSION+" equals update version " + element.GetName())
+			color.Red("%v", "Cannot update release-tool. Current version " + RTVERSION + " equals update version " + element.GetName())
 			os.Exit(128)
 		}
 
-		return "https://github.com/DALTCORE/ReleaseTools/releases/download/" + element.GetName() + "/" + getAssetByOs()
+		return "https://github.com/DALTCORE/ReleaseTools-go/releases/download/" + element.GetName() + "/" + getAssetByOs()
 	}
 
 	return ""
@@ -55,7 +55,7 @@ func checkIfUpdateAvailible() bool {
 		PerPage: 1,
 	}
 
-	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools", &opt)
+	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
 	for _, element := range tags {
 		if RTVERSION == "{{VERSION}}" {
 			return false
@@ -75,7 +75,7 @@ func getGitVersion() string {
 		PerPage: 1,
 	}
 
-	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools", &opt)
+	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
 	for _, element := range tags {
 		return element.GetName()
 	}
