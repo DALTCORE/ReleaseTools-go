@@ -20,7 +20,7 @@ import (
 type MergeRequestSummary struct {
 	Title     string `json:"title"`
 	Name      string `json:"author"`
-	MergeType string `json:"type"`
+	MergeType string `json:"merge_request"`
 	MergeId   string `json:"id"`
 }
 
