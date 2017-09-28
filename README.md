@@ -12,10 +12,11 @@ ReleaseTools in golang version. Binary compatible with:
 One-line install for lazy MacOS users:
 
 ```console
-$ curl -L -o ~/bin/release-tool-darwin-amd64 \
+$ mkdir -p ~/bin \
+  && curl -L -o ~/bin/release-tool-darwin-amd64 \
   https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.0.5/release-tool-darwin-amd64 \
   && chmod +x ~/bin/release-tool-darwin-amd64 \
-  && ln -s ~/bin/release-tool-darwin-amd64 ~/bin/rt
+  && ln -sfv ~/bin/release-tool-darwin-amd64 ~/bin/rt
 ```
 
 Make sure that you have pointed `~/bin` in your `$PATH`.
@@ -24,10 +25,11 @@ Make sure that you have pointed `~/bin` in your `$PATH`.
 One-line install for lazy Linux users:
 
 ```console
-$ curl -L -o ~/bin/release-tool-linux-amd64 \
+$ mkdir -p ~/bin \
+  && curl -L -o ~/bin/release-tool-linux-amd64 \
   https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.0.5/release-tool-linux-amd64 \
   && chmod +x ~/bin/release-tool-linux-amd64 \
-  && ln -s ~/bin/release-tool-linux-amd64 ~/bin/rt
+  && ln -sfv ~/bin/release-tool-linux-amd64 ~/bin/rt
 ```
 
 Make sure that you have pointed `~/bin` in your `$PATH`.
