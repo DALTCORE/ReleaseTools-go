@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"os"
 	"github.com/fatih/color"
+	"golang.org/x/oauth2"
 )
 
 func getAssetByOs() string {
@@ -26,7 +27,11 @@ func getAssetByOs() string {
 
 func getAssetDownloadUrl() string {
 	ctx := context.Background()
-	client := github.NewClient(nil)
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: ConfigFile().GithubAccessToken},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
 
 	opt := github.ListOptions{
 		Page:    1,
@@ -34,6 +39,7 @@ func getAssetDownloadUrl() string {
 	}
 
 	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
+
 	for _, element := range tags {
 		if RTVERSION != element.GetName() {
 			color.Red("%v", "Cannot update release-tool. Current version " + RTVERSION + " equals update version " + element.GetName())
@@ -48,14 +54,20 @@ func getAssetDownloadUrl() string {
 
 func checkIfUpdateAvailible() bool {
 	ctx := context.Background()
-	client := github.NewClient(nil)
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: ConfigFile().GithubAccessToken},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
 
 	opt := github.ListOptions{
 		Page:    1,
 		PerPage: 1,
 	}
 
+
 	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
+
 	for _, element := range tags {
 		if RTVERSION == "{{VERSION}}" {
 			return false
@@ -68,7 +80,11 @@ func checkIfUpdateAvailible() bool {
 
 func getGitVersion() string {
 	ctx := context.Background()
-	client := github.NewClient(nil)
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: ConfigFile().GithubAccessToken},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
 
 	opt := github.ListOptions{
 		Page:    1,

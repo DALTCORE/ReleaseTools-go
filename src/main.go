@@ -128,7 +128,9 @@ func main() {
 						"repo: namespace/repo\n" +
 						"api_url: https://gitlab.com/api/v4\n" +
 						"api_key: YourRandomApiKey\n" +
-						"mattermost_webhook: https://mattermost.com/hooks/de1pqpn9dprmj\n"
+						"mattermost_webhook: https://mattermost.com/hooks/de1pqpn9dprmj\n" +
+						"github_token: YourRandomToken\n" +
+						"# Create a github_token: https://github.com/settings/tokens/new?scopes=repo&description=ReleaseTools-Go\n"
 
 					// write the whole body at once
 					err := ioutil2.WriteFile(ReleaseToolsConfigFile(), []byte(rtcf), 0644)

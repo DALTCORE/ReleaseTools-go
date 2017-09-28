@@ -28,6 +28,7 @@ type ConfigHolder struct {
 	ApiUrl            string `json:"api_url"`
 	ApiKey            string `json:"api_key"`
 	MattermostWebhook string `json:"mattermost_webhook"`
+	GithubAccessToken string `json:"github_token"`
 }
 
 type Changelogs struct {
