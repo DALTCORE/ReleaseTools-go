@@ -134,7 +134,7 @@ func main() {
 						"# Create a github_token: https://github.com/settings/tokens/new?scopes=repo&description=ReleaseTools-Go\n"
 
 					// write the whole body at once
-					err := ioutil2.WriteFile(ReleaseToolsConfigFile(), []byte(rtcf), 0644)
+					err := ioutil2.WriteFile(ReleaseToolsConfigFile(), []byte(rtcf), 0755)
 					if err != nil {
 						panic(err)
 					}
@@ -142,32 +142,32 @@ func main() {
 				}
 
 				if CheckIfChangelogDirsAreReady() == false {
-					os.Mkdir(ChangelogsDirectory(), 0644)
+					os.Mkdir(ChangelogsDirectory(), 0755)
 					color.Green("Added " + ChangelogsDirectory())
 				}
 
 				if CheckIfReleaseToolDirIsReady() == false {
-					os.Mkdir(ReleaseToolDirectory(), 0644)
+					os.Mkdir(ReleaseToolDirectory(), 0755)
 					color.Green("Added " + ReleaseToolDirectory())
 				}
 
 				if CheckIfReleaseToolStubDirIsReady() == false {
-					os.Mkdir(ReleaseToolStubDirectory(), 0644)
+					os.Mkdir(ReleaseToolStubDirectory(), 0755)
 					color.Green("Added " + ReleaseToolStubDirectory())
 				}
 
 				if CheckIfReleaseToolPlaybookDirIsReady() == false {
-					os.Mkdir(ReleaseToolPlaybookDirectory(), 0644)
+					os.Mkdir(ReleaseToolPlaybookDirectory(), 0755)
 					color.Green("Added " + ReleaseToolPlaybookDirectory())
 				}
 
 				if CheckIfChangelogReleasedDirIsReady() == false {
-					os.Mkdir(ChangelogReleasedDirectory(), 0644)
+					os.Mkdir(ChangelogReleasedDirectory(), 0755)
 					color.Green("Added " + ChangelogReleasedDirectory())
 				}
 
 				if CheckIfChangelogUnreleasedDirIsReady() == false {
-					os.Mkdir(ChangelogUnreleasedDirectory(), 0644)
+					os.Mkdir(ChangelogUnreleasedDirectory(), 0755)
 					color.Green("Added " + ChangelogUnreleasedDirectory())
 				}
 
