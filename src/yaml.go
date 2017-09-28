@@ -11,6 +11,7 @@ import (
 	"time"
 	"github.com/vigneshuvi/GoDateFormat"
 	"bufio"
+	"github.com/imdario/mergo"
 )
 
 /**
@@ -51,20 +52,36 @@ func BuildChangelogEntry(summary MergeRequestSummary) string {
 }
 
 func ConfigFile() ConfigHolder {
-	var p2 ConfigHolder
+	var c1 ConfigHolder
 
 	b, err := ioutil.ReadFile(ReleaseToolsConfigFile()) // just pass the file name
 	if err != nil {
 		// fmt.Print(err)
 	}
 
-	err = yaml.Unmarshal(b, &p2)
+	err = yaml.Unmarshal(b, &c1)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return ConfigHolder{}
 	}
 
-	return p2
+	if CheckIfReleaseToolHomeInit() {
+		var c2 ConfigHolder
+		h, err := ioutil.ReadFile(ReleaseToolsHomeConfigFile()) // just pass the file name
+		if err != nil {
+			// fmt.Print(err)
+		}
+
+		err = yaml.Unmarshal(h, &c2)
+		if err != nil {
+			fmt.Printf("err: %v\n", err)
+			return ConfigHolder{}
+		}
+
+		mergo.MergeWithOverwrite(&c1, c2)
+	}
+
+	return c1
 }
 
 func BuildWholeChangelog(version string) {

@@ -92,6 +92,16 @@ func CheckIfReleaseToolInit() bool {
 	return true
 }
 
+func CheckIfReleaseToolHomeInit() bool {
+	var osCompatibleDir string = filepath.FromSlash(ReleaseToolsHomeConfigFile())
+
+	if _, err := os.Stat(osCompatibleDir); os.IsNotExist(err) {
+		return false
+	}
+
+	return true
+}
+
 func CheckIfReleaseToolDirIsReady() bool {
 	var directory bytes.Buffer
 

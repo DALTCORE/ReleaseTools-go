@@ -6,6 +6,7 @@ import (
 	"log"
 	"bytes"
 	"runtime"
+	"github.com/mitchellh/go-homedir"
 )
 
 func CurrentExecutablePath() string {
@@ -25,7 +26,6 @@ func CurrentWorkingDirectory() string {
 
 	return dir
 }
-
 
 func ChangelogsDirectory() string {
 	var directory bytes.Buffer
@@ -86,6 +86,20 @@ func ReleaseToolsConfigFile() string {
 	directory.WriteString(".release-tool")
 
 	var osCompatibleDir string = filepath.FromSlash(directory.String())
+
+	dir, err := filepath.Abs(osCompatibleDir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return dir
+}
+
+func ReleaseToolsHomeConfigFile() string {
+	rtFileHome, _ := homedir.Dir()
+	rtFileHome = rtFileHome + DirSep() + ".release-tool"
+
+	var osCompatibleDir string = filepath.FromSlash(rtFileHome)
 
 	dir, err := filepath.Abs(osCompatibleDir)
 	if err != nil {

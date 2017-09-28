@@ -65,7 +65,6 @@ func checkIfUpdateAvailible() bool {
 		PerPage: 1,
 	}
 
-
 	tags, _, _ := client.Repositories.ListTags(ctx, "DALTCORE", "ReleaseTools-go", &opt)
 
 	for _, element := range tags {

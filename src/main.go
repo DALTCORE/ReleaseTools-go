@@ -22,6 +22,7 @@ const RTVERSION = "{{VERSION}}"
  * Mainly main things
  */
 func main() {
+
 	// Check network conn.
 	_, err := net.DialTimeout("tcp", "github.com:443", 10*time.Second)
 	if err != nil {
