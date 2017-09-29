@@ -7,6 +7,7 @@ import (
 	ioutil "io/ioutil"
 	"os"
 	"strings"
+	"github.com/fatih/color"
 )
 
 func ParsePlaybook(name string) bool {
@@ -17,7 +18,12 @@ func ParsePlaybook(name string) bool {
 	}
 
 	viper.SetConfigType("yaml")
-	viper.ReadConfig(bytes.NewBuffer(b))
+	err = viper.ReadConfig(bytes.NewBuffer(b))
+
+	if err != nil {
+		color.Red(err.Error())
+		os.Exit(1)
+	}
 
 	// Handling playbook!
 	if viper.IsSet("playbook") == false {
@@ -48,6 +54,7 @@ func versionOneDotOne() {
 		if viper.IsSet("playbook.gitlab.merge_request") {
 			fromBranch := viper.GetString("playbook.gitlab.merge_request.from")
 			toBranch := viper.GetString("playbook.gitlab.merge_request.to")
+			mergeTitle := viper.GetString("playbook.gitlab.merge_request.title")
 
 			if strings.Contains(fromBranch, ":version") {
 				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
@@ -58,6 +65,8 @@ func versionOneDotOne() {
 			}
 
 			fmt.Println("Merge request from", fromBranch, "to", toBranch)
+			MergeRequest := GitlabMakeMergeRequest(mergeTitle, fromBranch, toBranch)
+			fmt.Println("URL:", MergeRequest.WebURL)
 		}
 
 		if viper.IsSet("playbook.gitlab.make_branch") {
@@ -73,6 +82,23 @@ func versionOneDotOne() {
 			}
 
 			fmt.Println("Make branch from", fromBranch, "to", toBranch)
+			GitlabMakeBranch(fromBranch, toBranch)
+		}
+
+		if viper.IsSet("playbook.gitlab.tag") {
+			fromBranch := viper.GetString("playbook.gitlab.tag.from")
+			toBranch := viper.GetString("playbook.gitlab.tag.to")
+
+			if strings.Contains(fromBranch, ":version") {
+				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
+			}
+
+			if strings.Contains(toBranch, ":version") {
+				toBranch = strings.Replace(toBranch, ":version", askQuestion(ASK_VERSION), -1)
+			}
+
+			fmt.Println("Make branch from", fromBranch, "to", toBranch)
+			GitlabMakeTag(fromBranch, toBranch)
 		}
 	}
 
@@ -82,6 +108,7 @@ func versionOneDotOne() {
 			message := viper.GetString("playbook.mattermost.notify.message")
 
 			fmt.Println("Notify channel", channel, "with message", message)
+			MattermostNotify(channel,message)
 		}
 	}
 }
