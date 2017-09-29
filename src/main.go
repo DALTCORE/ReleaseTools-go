@@ -23,7 +23,6 @@ const RTVERSION = "{{VERSION}}"
  */
 func main() {
 
-	// Check network conn.
 	_, err := net.DialTimeout("tcp", "github.com:443", 10*time.Second)
 	if err != nil {
 		color.Red("%s", "Cannot connect to network. Some features might be by unstable now!")
@@ -42,7 +41,17 @@ func main() {
 			err = update.Apply(resp.Body, update.Options{})
 			if err != nil {
 				color.Red("%v", err)
+				fmt.Println("Going to rollback old version")
+				err = update.RollbackError(err)
+				if err != nil {
+					color.Red("%v", err)
+					fmt.Println("Can not recover from failed update!")
+					os.Exit(-1);
+				}
 			}
+
+			fmt.Println("Restart the application to make use of the new version")
+			os.Exit(0)
 		}
 	}
 
