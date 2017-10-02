@@ -35,7 +35,16 @@ $ mkdir -p ~/bin \
 Make sure that you have pointed `~/bin` in your `$PATH`.
 
 ## Windows
-:information_desk_person: dunno lol! 
+1. Download [release-tool-windows-amd64.exe](https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.0.5/release-tool-windows-amd64.exe)
+and copy it to `C:\Users\<name>\bin` (create if directory does not exist yet!)  
+
+2. Rename the file to `release-tool.exe` or `rt.exe` 
+
+```cmd
+SETX /M path "%path%;%userprofile%\bin"
+```
+
+Restart your terminal and run `release-tool help` or `rt help`
 
 # Usage
 
