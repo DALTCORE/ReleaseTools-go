@@ -24,7 +24,12 @@ func GitlabMakeIssue(title string, stub string) *gitlab.Issue {
 		Description: &stub,
 	}
 
-	Issue, _, _ := git.Issues.CreateIssue(ConfigFile().Repo, &opt)
+	Issue, _, err := git.Issues.CreateIssue(ConfigFile().Repo, &opt)
+
+	if err != nil {
+		color.Red(err.Error())
+		os.Exit(1)
+	}
 
 	return Issue
 }
