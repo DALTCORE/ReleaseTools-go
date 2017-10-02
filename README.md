@@ -40,11 +40,13 @@ and copy it to `C:\Users\<name>\bin` (create if directory does not exist yet!)
 
 2. Rename the file to `release-tool.exe` or `rt.exe` 
 
+3. Open CMD as administrator and run:
 ```cmd
 SETX /M path "%path%;%userprofile%\bin"
 ```
+This migth take a while / hang. You can just close it after a couple of seconds.
 
-Restart your terminal and run `release-tool help` or `rt help`
+4. Restart your terminal and run `release-tool help` or `rt help`
 
 # Usage
 
