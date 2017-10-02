@@ -207,6 +207,16 @@ func main() {
 					error = true
 				}
 
+				if CheckIfReleaseToolHomeInit() {
+					fmt.Println("")
+					color.Magenta("/!\\ This is the global .release-tool file which overrides keys from local config /!\\")
+					color.Magenta("/!\\ if the keys are non-existent or if they're empty /!\\")
+					color.Cyan("File " + ReleaseToolsHomeConfigFile() + " is found")
+					fmt.Println("")
+				} else {
+					error = true
+				}
+
 				if CheckIfReleaseToolDirIsReady() {
 					color.Green("Directory " + ReleaseToolDirectory() + " is found")
 
