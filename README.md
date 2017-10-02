@@ -42,7 +42,7 @@ and copy it to `C:\Users\<name>\bin` (create if directory does not exist yet!)
 
 3. Open CMD as administrator and run:
 ```cmd
-SETX /M path "%path%;%userprofile%\bin"
+SETX path "%path%;%userprofile%\bin"
 ```
 This migth take a while / hang. You can just close it after a couple of seconds.
 
