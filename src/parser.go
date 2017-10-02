@@ -64,6 +64,18 @@ func versionOneDotOne() {
 				toBranch = strings.Replace(toBranch, ":version", askQuestion(ASK_VERSION), -1)
 			}
 
+			if strings.Contains(mergeTitle, ":version") {
+				mergeTitle = strings.Replace(mergeTitle, ":version", askQuestion(ASK_VERSION), -1)
+			}
+
+			if strings.Contains(mergeTitle, ":from") {
+				mergeTitle = strings.Replace(mergeTitle, ":from", fromBranch, -1)
+			}
+
+			if strings.Contains(mergeTitle, ":to") {
+				mergeTitle = strings.Replace(mergeTitle, ":to", toBranch, -1)
+			}
+
 			fmt.Println("Merge request from", fromBranch, "to", toBranch)
 			MergeRequest := GitlabMakeMergeRequest(mergeTitle, fromBranch, toBranch)
 			fmt.Println("URL:", MergeRequest.WebURL)
@@ -85,20 +97,20 @@ func versionOneDotOne() {
 			GitlabMakeBranch(fromBranch, toBranch)
 		}
 
-		if viper.IsSet("playbook.gitlab.tag") {
-			fromBranch := viper.GetString("playbook.gitlab.tag.from")
-			toBranch := viper.GetString("playbook.gitlab.tag.to")
+		if viper.IsSet("playbook.gitlab.create_tag") {
+			fromBranch := viper.GetString("playbook.gitlab.create_tag.from")
+			tagName := viper.GetString("playbook.gitlab.create_tag.name")
 
 			if strings.Contains(fromBranch, ":version") {
 				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
 			}
 
-			if strings.Contains(toBranch, ":version") {
-				toBranch = strings.Replace(toBranch, ":version", askQuestion(ASK_VERSION), -1)
+			if strings.Contains(tagName, ":version") {
+				tagName = strings.Replace(tagName, ":version", askQuestion(ASK_VERSION), -1)
 			}
 
-			fmt.Println("Make branch from", fromBranch, "to", toBranch)
-			GitlabMakeTag(fromBranch, toBranch)
+			fmt.Println("Create tag from", fromBranch, "name:", tagName)
+			GitlabMakeTag(fromBranch, tagName)
 		}
 	}
 
@@ -106,6 +118,11 @@ func versionOneDotOne() {
 		if viper.IsSet("playbook.mattermost.notify") {
 			channel := viper.GetString("playbook.mattermost.notify.channel")
 			message := viper.GetString("playbook.mattermost.notify.message")
+
+			if strings.Contains(message, ":url") {
+				url := strings.Replace(ConfigFile().Repo, "source/", "", -1);
+				message = strings.Replace(message, ":url", "https://" + url + ".intotheaccept.com", -1)
+			}
 
 			fmt.Println("Notify channel", channel, "with message", message)
 			MattermostNotify(channel,message)
