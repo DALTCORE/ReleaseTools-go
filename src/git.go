@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"os/exec"
 	"strings"
-	"fmt"
 )
 
 type ErrNotFound struct {
