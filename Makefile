@@ -7,7 +7,7 @@ VET_REPORT = vet.report
 TEST_REPORT = tests.xml
 GOARCH = amd64
 
-VERSION?=1.0.7
+VERSION?=1.0.8
 COMMIT=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
