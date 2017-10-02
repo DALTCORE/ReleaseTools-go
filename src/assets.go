@@ -49,7 +49,7 @@ func assetPrepareStub() string {
 		"- [ ] Notify in Mattermost `rt p notify-upcoming-release :version`  " +
 		"- [ ] Merge request *develop > releases/v:version* `rt p develop-to-release :version`  " +
 		"- [ ] Checkout releases/v:version `git fetch --all; git checkout releases/v:version`  " +
-		"- [ ] Generate changelog `rt mp :version`  " +
+		"- [ ] Generate changelog `rt mc :version`  " +
 		"- [ ] Create merge request *releases/v:version > staging* `rt p release-to-staging :version`  " +
 		"- [ ] Wait for merge request *releases/v:version > staging* to be merged  " +
 		"- [ ] Notify in Mattermost `rt p notify-accept :version`  " +

@@ -124,6 +124,14 @@ func versionOneDotOne() {
 				message = strings.Replace(message, ":url", "https://" + url + ".intotheaccept.com", -1)
 			}
 
+			if strings.Contains(message, ":version") {
+				message = strings.Replace(message, ":version", askQuestion(ASK_VERSION), -1)
+			}
+
+			if strings.Contains(message, ":repo") {
+				message = strings.Replace(message, ":repo", ConfigFile().Repo, -1)
+			}
+
 			fmt.Println("Notify channel", channel, "with message", message)
 			MattermostNotify(channel,message)
 		}
