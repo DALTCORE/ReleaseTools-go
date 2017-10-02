@@ -17,12 +17,9 @@ func ExecGit(args ...string) string {
 	var stdout bytes.Buffer
 	cmd := exec.Command("git", gitArgs...)
 
-
 	cmd.Stdout = &stdout
 	cmd.Stderr = ioutil.Discard
 	cmd.Run()
-
-	fmt.Println(stdout.String())
 
 	str := stdout.String()
 	str = strings.TrimLeft(str, "* ")
@@ -40,7 +37,6 @@ func ExecGit(args ...string) string {
 func GetCurrentBranch() string {
 	var stdout bytes.Buffer
 	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-
 
 	cmd.Stdout = &stdout
 	cmd.Stderr = ioutil.Discard
