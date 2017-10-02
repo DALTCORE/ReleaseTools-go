@@ -20,8 +20,8 @@ import (
 type MergeRequestSummary struct {
 	Title     string `json:"title"`
 	Name      string `json:"author"`
-	MergeType string `json:"merge_request"`
-	MergeId   string `json:"id"`
+	MergeType string `json:"type"`
+	MergeId   string `json:"merge_request"`
 }
 
 type ConfigHolder struct {
