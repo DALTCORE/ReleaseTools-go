@@ -47,7 +47,7 @@ NAME:
    ReleaseTools - Releasing made easy
 
 USAGE:
-   assets.exe [global options] command [command options] [arguments...]
+   release-tool [global options] command [command options] [arguments...]
 
 VERSION:
    {{VERSION}}
@@ -70,63 +70,72 @@ GLOBAL OPTIONS:
 
 ### Manager prepare
 ```terminal
-$ rt mp 1.0.0
+$ release-tool manager:prepare (?1.0.0)
+$ rt mp (?1.0.0)
 ```
 
 Prepare a new release issue into Gitlab.
 
 ### Manager setup
 ```terminal
- $ rt ms
+$ release-tool manager:setup
+$ rt ms
 ```
  
 Create a new repository in a group with the preferred permissions
 
 ### Manager changelog
 ```terminal
- $ rt mc 1.0.0
+$ release-tool manager:changelog (?1.0.0)
+$ rt mc (?1.0.0)
 ```
 
 Build the CHANGELOG.md file from all the changelogs in `changelog/unreleased`.
 
 ### Init
 ```terminal
- $ rt i
+$ release-tool init
+$ rt i
 ```
 
 Initialize a fresh ReleaseTool environment for usage with projects.
 
 ### Status
 ```terminal
- $ rt s
+$ release-tool status
+$ rt s
 ```
 
 Display the status of the current ReleaseTool environment.
 
 ### Playbook
 ```terminal
- $ rt p <playbook-name> (?1.0.0)
+$ release-tool playbook <playbook-name> (?1.0.0)
+$ rt p <playbook-name> (?1.0.0)
 ```
 
 Run a playbook based on playbook name with optional parameter for versions.
 
 ### Auto update
 ```terminal
- $ rt au (?--force)
+$ release-tool auto-update (?--force)
+$ rt au (?--force)
 ```
 
 Updates the ReleaseTool environment. 
 
 ### Changelog
 ```terminal
- $ rt c (?--dry-run) (?--force)
+$ release-tool changelog (?--dry-run) (?--force)
+$ rt c (?--dry-run) (?--force)
 ```
 
 Create a changelog for the current merge request.
 
 ### Help
 ```terminal
- $ rt help
+$ release-tool help
+$ rt help
 ```
 
 Shows help for ReleaseTool
@@ -142,19 +151,19 @@ playbook:                                                   # Definition for Rel
       channel: Townsquare                                   # Set Mattermost channel
       message: "Foobar with :url and :version and :repo"    # Set Message to be send to the channel
       
-  gitlab:
-    merge_request:
-      title: "Release v:version to :to from :from"
-      from: develop
-      to: master
+  gitlab:                                                   # Select subject Gitlab for the playbook parser
+    merge_request:                                          # Select method MergeRequest for the playbook parser
+      title: "Release v:version to :to from :from"          # Set merge request title 
+      from: develop                                         # Set the branch/ref/source where this MR is coming from
+      to: master                                            # Set the name of the new branch
       
-    make_branch:
-      from: develop
-      to: v:version
+    make_branch:                                            # Select method MakeBranch for the playbook parser
+      from: develop                                         # Set the branch/ref/source for the new branch
+      to: v:version                                         # Set the new branch name
       
-    create_tag:
-      from: master
-      to: v:version
+    create_tag:                                             # Select method CreateTag for the playbook parser
+      from: master                                          # Set the branch/ref/source for the new branch
+      to: v:version                                         # Set the new tag name.
 ```
 
 ## Stubs
@@ -180,7 +189,7 @@ playbook:                                                   # Definition for Rel
 ## Useful information
 
 ### Global and local release tool information
-The [`rt i`](#init) command creates a local `.release-tool` file in the directory you're calling it from.  
+The [`release-tool init`](#init) command creates a local `.release-tool` file in the directory you're calling it from.  
 If you fill this document with the correct information, and remove the "repo" key then you can place it in 
 you're home directory. ReleaseTool will merge the information from the home file to the local file on the fly
 
