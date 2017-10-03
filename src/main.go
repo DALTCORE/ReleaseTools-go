@@ -94,7 +94,8 @@ func main() {
 
 				Issue := GitlabMakeIssue("Release of version v"+askQuestion(ASK_VERSION), text)
 
-				fmt.Printf("Issue '%v' is posted on %v", Issue.Title, Issue.WebURL)
+				fmt.Println("Issue '" + Issue.Title + "' is posted on:")
+				fmt.Println(Issue.WebURL)
 				return nil
 			},
 		},
