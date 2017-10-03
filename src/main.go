@@ -32,11 +32,14 @@ func main() {
 	if checkIfUpdateAvailible() {
 		fmt.Println("There is a update for the release-tool. \nNew version " + getGitVersion() + " \nYou have version: " + RTVERSION + "\n")
 		if askConfirmation() {
+			fmt.Println("Going to update...")
 			downloadUrl := getAssetDownloadUrl()
+			fmt.Println("Downloading update...")
 			resp, err := http.Get(downloadUrl)
 			if err != nil {
 				color.Red("%v", err)
 			}
+			fmt.Println("Applying update...")
 			defer resp.Body.Close()
 			err = update.Apply(resp.Body, update.Options{})
 			if err != nil {
@@ -50,7 +53,8 @@ func main() {
 				}
 			}
 
-			fmt.Println("Restart the application to make use of the new version")
+			fmt.Println("Update successful!")
+			fmt.Println("Restart the application to make use of the new version!")
 			os.Exit(0)
 		}
 	}
