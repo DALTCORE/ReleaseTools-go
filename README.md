@@ -7,6 +7,8 @@ ReleaseTools in golang version. Binary compatible with:
  - Windows amd64
 
 # Installation
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools-go.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools-go?ref=badge_shield)
+
 
 ## MacOS
 One-line install for lazy MacOS users:
@@ -218,3 +220,7 @@ github_token:
 ```
 
 This setup minimizes the risk of you committing and sharing your private keys and tokens.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools-go.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools-go?ref=badge_large)
