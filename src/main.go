@@ -25,7 +25,7 @@ func main() {
 
 	_, err := net.DialTimeout("tcp", "github.com:443", 10*time.Second)
 	if err != nil {
-		color.Red("%s", "Cannot connect to network. Some features might be by unstable now!")
+		color.Red("%s", "Cannot connect to network. Some features might be unstable now!")
 	}
 
 	// Auto updater
