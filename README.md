@@ -216,6 +216,7 @@ you're home directory. ReleaseTool will merge the information from the home file
 
 Local file example:
 ```yaml
+group: namespace
 repo: namespace/repo
 ```
 
