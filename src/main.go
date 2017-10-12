@@ -113,6 +113,15 @@ func main() {
 			},
 		},
 		{
+			Name:    "manager:changelog:list",
+			Aliases: []string{"mcl"},
+			Usage:   "Show the changelogs that are to be released",
+			Action: func(c *cli.Context) error {
+				ListChangelogs()
+				return nil
+			},
+		},
+		{
 			Name:    "manager:changelog",
 			Aliases: []string{"mc"},
 			Usage:   "Build all changelog entries to CHANGELOG.md",
@@ -123,9 +132,7 @@ func main() {
 				}
 				version := askQuestion(ASK_VERSION)
 
-
 				BuildWholeChangelog(version)
-
 				return nil
 			},
 		},

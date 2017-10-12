@@ -12,6 +12,7 @@ import (
 	"github.com/vigneshuvi/GoDateFormat"
 	"bufio"
 	"github.com/imdario/mergo"
+	"github.com/olekukonko/tablewriter"
 )
 
 /**
@@ -167,5 +168,44 @@ func BuildWholeChangelog(version string) {
 	if err != nil {
 		color.Red("Cannot write changelog: " + err.Error())
 	}
+
+}
+
+func ListChangelogs() {
+	files, err := ioutil.ReadDir(ChangelogUnreleasedDirectory())
+	if err != nil {
+		color.Red(err.Error())
+		os.Exit(1)
+	}
+
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"MR ID", "Author", "Entry", "Type"})
+	table.SetBorder(true)
+
+	for _, f := range files {
+
+		fileName := ChangelogUnreleasedDirectory() + DirSep() + f.Name()
+		MrSum := MergeRequestSummary{}
+
+		b, err := ioutil.ReadFile(fileName) // just pass the file name
+		if err != nil {
+			fmt.Print(err)
+		}
+
+		err = yaml.Unmarshal(b, &MrSum)
+		if err != nil {
+			color.Red("err: %v\n", err)
+		}
+
+		table.Append([]string{MrSum.MergeId, MrSum.Name, MrSum.Title, MrSum.MergeType})
+
+	}
+
+	if len(files) >= 0 {
+		table.Render()
+	} else {
+		color.Red("No unreleased changelogs found!")
+	}
+
 
 }
