@@ -97,3 +97,16 @@ func getGitVersion() string {
 
 	return "unknown"
 }
+
+func getGitChangeLog() string {
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: ConfigFile().GithubAccessToken},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
+
+	release, _, _ := client.Repositories.GetLatestRelease(ctx, "DALTCORE", "ReleaseTools-go")
+
+	return release.GetBody()
+}

@@ -30,7 +30,10 @@ func main() {
 
 	// Auto updater
 	if checkIfUpdateAvailible() {
-		fmt.Println("There is a update for the release-tool. \nNew version " + getGitVersion() + " \nYou have version: " + RTVERSION + "\n")
+		fmt.Println("There is a update for the release-tool. \nNew version " + getGitVersion() + " and you have version: " + RTVERSION + "\n")
+		fmt.Println("Changelog:")
+		fmt.Println(getGitChangeLog())
+		fmt.Println("")
 		if askConfirmation() {
 			fmt.Println("Going to update...")
 			downloadUrl := getAssetDownloadUrl()
@@ -296,40 +299,40 @@ func main() {
 				return nil
 			},
 		},
-		{
-			Name:    "auto-update",
-			Aliases: []string{"au"},
-			Usage:   "Auto update the Release Tools",
-			Flags: []cli.Flag{
-				cli.BoolFlag{
-					Name:  "force",
-					Usage: "Force update",
-				},
-			},
-			Action: func(c *cli.Context) error {
-				if checkIfUpdateAvailible() || c.IsSet("force") {
-					fmt.Println("Going to update...")
-					downloadUrl := getAssetDownloadUrl()
-
-					fmt.Println("Downloading...")
-					resp, err := http.Get(downloadUrl)
-					if err != nil {
-						color.Red("%v", err)
-					}
-					defer resp.Body.Close()
-					fmt.Println("Going to apply update...")
-					err = update.Apply(resp.Body, update.Options{})
-					if err != nil {
-						color.Red("%v", err)
-					}
-
-					fmt.Println("Updating finished...")
-				} else {
-					fmt.Println("There is no update for the release-tool.\nGit version " + getGitVersion() + " \nYou have version: " + RTVERSION + "\n")
-				}
-				return nil
-			},
-		},
+		//{
+		//	Name:    "auto-update",
+		//	Aliases: []string{"au"},
+		//	Usage:   "Auto update the Release Tools",
+		//	Flags: []cli.Flag{
+		//		cli.BoolFlag{
+		//			Name:  "force",
+		//			Usage: "Force update",
+		//		},
+		//	},
+		//	Action: func(c *cli.Context) error {
+		//		if checkIfUpdateAvailible() || c.IsSet("force") {
+		//			fmt.Println("Going to update...")
+		//			downloadUrl := getAssetDownloadUrl()
+		//
+		//			fmt.Println("Downloading...")
+		//			resp, err := http.Get(downloadUrl)
+		//			if err != nil {
+		//				color.Red("%v", err)
+		//			}
+		//			defer resp.Body.Close()
+		//			fmt.Println("Going to apply update...")
+		//			err = update.Apply(resp.Body, update.Options{})
+		//			if err != nil {
+		//				color.Red("%v", err)
+		//			}
+		//
+		//			fmt.Println("Updating finished...")
+		//		} else {
+		//			fmt.Println("There is no update for the release-tool.\nGit version " + getGitVersion() + " \nYou have version: " + RTVERSION + "\n")
+		//		}
+		//		return nil
+		//	},
+		//},
 		{
 			Name:    "changelog",
 			Aliases: []string{"c"},

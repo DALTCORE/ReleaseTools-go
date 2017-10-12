@@ -6,6 +6,7 @@ import (
 	"github.com/metal3d/go-slugify"
 	"os"
 	"github.com/fatih/color"
+	"strings"
 )
 
 func GitlabCheckOpenMrById(mrid int) (*gitlab.MergeRequest, error) {
@@ -76,17 +77,35 @@ func GitlabMakeTag(from string, to string) *gitlab.Tag {
 	return Tag
 }
 
+
 func SetupFreshRepo(name string) {
 	git := gitlab.NewClient(nil, ConfigFile().ApiKey)
 	git.SetBaseURL(ConfigFile().ApiUrl)
 	slug := slugify.Marshal(name)
 
 	fmt.Println("Creating repository with default branch 'develop'...")
+
+	if len(ConfigFile().Repo) == 0 {
+		color.Red("Repo is not set in .release-tool file.")
+		os.Exit(0)
+	}
+
+	ns := strings.Split(ConfigFile().Group, "/")
+	namespace, _, e := git.Namespaces.SearchNamespace(ns[0])
+
+	if e != nil {
+		color.Red(e.Error())
+	}
+
+	fmt.Printf("%v\n", namespace[0].ID)
+
+	os.Exit(1)
+
 	// Create repo
 	gitlabStruct := gitlab.CreateProjectOptions{
 		Name: gitlab.String(name),
 		Path: gitlab.String(slug),
-		NamespaceID: gitlab.Int(5), // curl --header "PRIVATE-TOKEN: TOKEN_HERE" https://git.intothesource.com/api/v4/namespaces?search=source
+		NamespaceID: gitlab.Int(namespace[1].ID), // curl --header "PRIVATE-TOKEN: TOKEN_HERE" https://git.intothesource.com/api/v4/namespaces?search=source
 		MergeRequestsEnabled: gitlab.Bool(true),
 		OnlyAllowMergeIfAllDiscussionsAreResolved: gitlab.Bool(true),
 		OnlyAllowMergeIfPipelineSucceeds: gitlab.Bool(true),

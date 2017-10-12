@@ -26,6 +26,7 @@ type MergeRequestSummary struct {
 }
 
 type ConfigHolder struct {
+	Group             string `json:"group"`
 	Repo              string `json:"repo"`
 	ApiUrl            string `json:"api_url"`
 	ApiKey            string `json:"api_key"`
@@ -201,7 +202,7 @@ func ListChangelogs() {
 
 	}
 
-	if len(files) >= 0 {
+	if len(files) > 0 {
 		table.Render()
 	} else {
 		color.Red("No unreleased changelogs found!")
