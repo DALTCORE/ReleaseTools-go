@@ -72,7 +72,6 @@ COMMANDS:
      init, i                Initialize a ReleaseTools environment
      status, s              Get ReleaseTools environment status
      playbook, p            Run a playbook
-     auto-update, au        Auto update the Release Tools
      changelog, c           Make a changelog entry
      help, h                Shows a list of commands or help for one command
 
@@ -135,13 +134,13 @@ $ release-tool playbook <playbook-name> (?1.0.0)
 $ rt p <playbook-name> (?1.0.0)
 ```
 
-Run a playbook based on playbook name with optional parameter for versions.
+<!-- Run a playbook based on playbook name with optional parameter for versions.
 
 ### Auto update
 ```terminal
 $ release-tool auto-update (?--force)
 $ rt au (?--force)
-```
+``` -->
 
 Updates the ReleaseTool environment. 
 
