@@ -119,9 +119,11 @@ func versionOneDotOne() {
 			channel := viper.GetString("playbook.mattermost.notify.channel")
 			message := viper.GetString("playbook.mattermost.notify.message")
 
-			if strings.Contains(message, ":url") {
-				url := strings.Replace(ConfigFile().Repo, "source/", "", -1);
-				message = strings.Replace(message, ":url", "https://" + url + ".intotheaccept.com", -1)
+
+			// Very specific for our usage for our usage
+			if strings.Contains(message, ":project") {
+				url := strings.Replace(ConfigFile().Repo, ConfigFile().Group + "/", "", -1);
+				message = strings.Replace(message, ":project", url, -1)
 			}
 
 			if strings.Contains(message, ":version") {

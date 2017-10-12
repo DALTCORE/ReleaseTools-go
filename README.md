@@ -216,18 +216,18 @@ you're home directory. ReleaseTool will merge the information from the home file
 
 Local file example:
 ```yaml
-group: namespace
 repo: namespace/repo
 ```
 
 Home file example:
 ```yaml
-api_url: 
-api_key: 
-mattermost_webhook: 
+group: #namespace
+api_url: #Gitlab.com/api/v4
+api_key: #RandomKey
+mattermost_webhook: #MattermostWebhookUrl
 github_token: 
 ```
-
+[Create new Github Token here](https://github.com/settings/tokens/new?scopes=repo&description=ReleaseTools-Go)  
 This setup minimizes the risk of you committing and sharing your private keys and tokens.
 
 
