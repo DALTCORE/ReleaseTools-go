@@ -97,6 +97,14 @@ $ rt ms
  
 Create a new repository in a group with the preferred permissions
 
+### Manager changelog list
+```terminal
+$ release-tool manager:changelog:list
+$ rt mcl
+```
+
+List all the changelogs in `changelog/unreleased` in a table.
+
 ### Manager changelog
 ```terminal
 $ release-tool manager:changelog (?1.0.0)
