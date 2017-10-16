@@ -122,7 +122,7 @@ func versionOneDotOne() {
 
 			// Very specific for our usage for our usage
 			if strings.Contains(message, ":project") {
-				url := strings.Replace(ConfigFile().Repo, ConfigFile().Group + "/", "", -1);
+				url := StringBefore(ConfigFile().Repo, "/");
 				message = strings.Replace(message, ":project", url, -1)
 			}
 
