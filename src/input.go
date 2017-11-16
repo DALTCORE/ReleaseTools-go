@@ -17,6 +17,9 @@ const ASK_TITLE = "Whats the summary of this merge request?"
 const ASK_MRID = "What merge request id?"
 const ASK_REPONAME = "Whats the name of the new repository?"
 
+const ASK_ACCEPT = "Acceptation"
+const ASK_PRODUC = "Production"
+
 /**
  * Struct for slice AskedQuestions
  */
@@ -117,6 +120,32 @@ func askMergeType() string {
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("What is this merge request about? [0-7]: ")
+	index, _ := reader.ReadString('\n')
+
+	index = strings.Replace(index, "\r", "", -1)
+	index = strings.Replace(index, "\n", "", -1)
+
+	int64Index, _ := strconv.ParseInt(index, 10, 64)
+
+	if len(mergeRequestTypes) >= int(int64Index) {
+		return mergeRequestTypes[int64Index]
+	} else {
+		panic("Input is out of bounds!")
+	}
+}
+
+func askReleaseType() string {
+	mergeRequestTypes := [2]string{
+		"Acceptation",
+		"Production",
+	}
+
+	for index, element := range mergeRequestTypes {
+		fmt.Printf("[%d] %s\n", index, element)
+	}
+
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("What kind of release are you doing? [0-1]: ")
 	index, _ := reader.ReadString('\n')
 
 	index = strings.Replace(index, "\r", "", -1)

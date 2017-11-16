@@ -22,9 +22,6 @@ const RTVERSION = "{{VERSION}}"
  * Mainly main things
  */
 func main() {
-
-	fmt.Println(ConfigFile().Group)
-
 	_, err := net.DialTimeout("tcp", "github.com:443", 10*time.Second)
 	if err != nil {
 		color.Red("%s", "Cannot connect to network. Some features might be unstable now!")
@@ -82,16 +79,31 @@ func main() {
 			Usage:   "Prepare a new release",
 			Action: func(c *cli.Context) error {
 
-				byteArray, err := ioutil2.ReadFile(ReleaseToolStubDirectory() + DirSep() + "prepare.stub")
-				if err != nil {
-					fmt.Print(err)
+				var MergeType string = askReleaseType()
+
+				var text string = ""
+
+				if MergeType == ASK_ACCEPT {
+					byteArray, err := ioutil2.ReadFile(ReleaseToolStubDirectory() + DirSep() + "accept.stub")
+					if err != nil {
+						fmt.Print(err)
+					}
+
+					text = string(byteArray)
+				}
+
+				if MergeType == ASK_PRODUC {
+					byteArray, err := ioutil2.ReadFile(ReleaseToolStubDirectory() + DirSep() + "production.stub")
+					if err != nil {
+						fmt.Print(err)
+					}
+
+					text = string(byteArray)
 				}
 
 				if c.Args().Get(0) != "" {
 					setAwnser(ASK_VERSION, c.Args().Get(0))
 				}
-
-				text := string(byteArray)
 
 				if strings.Contains(text, ":version") {
 					text = strings.Replace(text, ":version", askQuestion(ASK_VERSION), -1)
@@ -101,10 +113,13 @@ func main() {
 					text = strings.Replace(text, ":repo", ConfigFile().Repo, -1)
 				}
 
-				Issue := GitlabMakeIssue("Release of version v"+askQuestion(ASK_VERSION), text)
+				// Issue := GitlabMakeIssue(MergeType + " release of version v"+askQuestion(ASK_VERSION), text)
 
-				fmt.Println("Issue '" + Issue.Title + "' is posted on:")
-				fmt.Println(Issue.WebURL)
+				fmt.Println(MergeType + " release of version v" + askQuestion(ASK_VERSION))
+				fmt.Println(text)
+
+				// fmt.Println("Issue '" + Issue.Title + "' is posted on:")
+				// fmt.Println(Issue.WebURL)
 				return nil
 			},
 		},

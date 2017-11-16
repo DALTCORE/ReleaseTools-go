@@ -6,7 +6,6 @@ import (
 	"github.com/metal3d/go-slugify"
 	"os"
 	"github.com/fatih/color"
-	"strings"
 )
 
 func GitlabCheckOpenMrById(mrid int) (*gitlab.MergeRequest, error) {
@@ -90,8 +89,7 @@ func SetupFreshRepo(name string) {
 		os.Exit(0)
 	}
 
-	ns := strings.Split(ConfigFile().Group, "/")
-	namespace, _, e := git.Namespaces.SearchNamespace(ns[0])
+	namespace, _, e := git.Namespaces.SearchNamespace(ConfigFile().Group)
 
 	if e != nil {
 		color.Red(e.Error())
@@ -99,13 +97,11 @@ func SetupFreshRepo(name string) {
 
 	fmt.Printf("%v\n", namespace[0].ID)
 
-	os.Exit(1)
-
 	// Create repo
 	gitlabStruct := gitlab.CreateProjectOptions{
 		Name: gitlab.String(name),
 		Path: gitlab.String(slug),
-		NamespaceID: gitlab.Int(namespace[1].ID), // curl --header "PRIVATE-TOKEN: TOKEN_HERE" https://git.intothesource.com/api/v4/namespaces?search=source
+		NamespaceID: gitlab.Int(namespace[0].ID), // curl --header "PRIVATE-TOKEN: TOKEN_HERE" https://git.intothesource.com/api/v4/namespaces?search=source
 		MergeRequestsEnabled: gitlab.Bool(true),
 		OnlyAllowMergeIfAllDiscussionsAreResolved: gitlab.Bool(true),
 		OnlyAllowMergeIfPipelineSucceeds: gitlab.Bool(true),

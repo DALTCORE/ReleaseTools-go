@@ -43,12 +43,15 @@ func assetTemplateBugMd() string {
 		"Add a screen shot or logfile that shows the bug.\n"
 }
 
+/***********
+ * Merge request template
+ */
 func assetPrepareStub() string {
 	return "**Release `:repo` version `:version`**  " +
 		"- [X] Create issue  " +
 		"- [ ] Notify in Mattermost `rt p notify-upcoming-release :version`  " +
 		"- [ ] Merge request *develop > releases/v:version* `rt p develop-to-release :version`  " +
-		"- [ ] Checkout releases/v:version `git fetch --all; git checkout releases/v:version`  " +
+		"- [ ] Checkout releases/v:version `git fetch origin; git checkout releases/v:version`  " +
 		"- [ ] Generate changelog `rt mc :version`  " +
 		"- [ ] Add changelog to git `git add .; git commit; git push`  " +
 		"- [ ] Create merge request *releases/v:version > staging* `rt p release-to-staging :version`  " +
