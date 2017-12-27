@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/inconshreveable/go-update"
-	"github.com/urfave/cli"
 	ioutil2 "io/ioutil"
 	"net"
 	"net/http"
@@ -14,6 +11,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/fatih/color"
+	"github.com/inconshreveable/go-update"
+	"github.com/urfave/cli"
 )
 
 const RTVERSION = "{{VERSION}}"
@@ -51,7 +52,7 @@ func main() {
 				if err != nil {
 					color.Red("%v", err)
 					fmt.Println("Can not recover from failed update!")
-					os.Exit(-1);
+					os.Exit(-1)
 				}
 			}
 
@@ -281,7 +282,7 @@ func main() {
 				}
 
 				if CheckIfChangelogUnreleasedDirIsReady() {
-					color.Green("Unreleased changelogs dir " + ChangelogUnreleasedDirectory() + "is found")
+					color.Green("Unreleased changelogs dir " + ChangelogUnreleasedDirectory() + " is found")
 				} else {
 					error = true
 				}

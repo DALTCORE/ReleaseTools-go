@@ -7,7 +7,7 @@ VET_REPORT = vet.report
 TEST_REPORT = tests.xml
 GOARCH = amd64
 
-VERSION?=1.1.1
+VERSION?=1.1.3
 COMMIT=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
@@ -49,16 +49,6 @@ darwin:
 windows:
 	cd ${BUILD_DIR}; \
 	GOOS=windows GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-windows-${GOARCH}.exe . ; \
-	cd - >/dev/null
-
-vet:
-	-cd ${BUILD_DIR}; \
-	go vet ../src/*.go > ${VET_REPORT} 2>&1 ; \
-	cd - >/dev/null
-
-fmt:
-	cd ${BUILD_DIR}; \
-	go fmt $$(go list ../src/*.go | grep -v /vendor/) ; \
 	cd - >/dev/null
 
 clean:
