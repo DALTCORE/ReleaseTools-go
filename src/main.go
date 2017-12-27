@@ -114,13 +114,13 @@ func main() {
 					text = strings.Replace(text, ":repo", ConfigFile().Repo, -1)
 				}
 
-				// Issue := GitlabMakeIssue(MergeType + " release of version v"+askQuestion(ASK_VERSION), text)
+				Issue := GitlabMakeIssue(MergeType+" release of version v"+askQuestion(ASK_VERSION), text)
 
-				fmt.Println(MergeType + " release of version v" + askQuestion(ASK_VERSION))
-				fmt.Println(text)
+				// fmt.Println(MergeType + " release of version v" + askQuestion(ASK_VERSION))
+				// fmt.Println(text)
 
-				// fmt.Println("Issue '" + Issue.Title + "' is posted on:")
-				// fmt.Println(Issue.WebURL)
+				fmt.Println("Issue '" + Issue.Title + "' is posted on:")
+				fmt.Println(Issue.WebURL)
 				return nil
 			},
 		},
