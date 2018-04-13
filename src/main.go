@@ -125,15 +125,6 @@ func main() {
 			},
 		},
 		{
-			Name:    "manager:setup",
-			Aliases: []string{"ms"},
-			Usage:   "Setup a new Repo and Intothetest/accept environment",
-			Action: func(c *cli.Context) error {
-				SetupFreshRepo(askQuestion(ASK_REPONAME))
-				return nil
-			},
-		},
-		{
 			Name:    "manager:changelog:list",
 			Aliases: []string{"mcl"},
 			Usage:   "Show the changelogs that are to be released",
