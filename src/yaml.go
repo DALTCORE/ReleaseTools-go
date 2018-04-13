@@ -139,11 +139,11 @@ func BuildWholeChangelog(version string) {
 	lastMergeType := ""
 	for _, v := range ParsedChangelogs {
 		if v.MergeSummary.MergeType != lastMergeType {
-			freshChangelog = freshChangelog + "\n**" + v.MergeSummary.MergeType + "**  \n\n"
+			freshChangelog = freshChangelog + "\n**" + v.MergeSummary.MergeType + "**\n\n"
 			lastMergeType = v.MergeSummary.MergeType
 		}
 
-		freshChangelog = freshChangelog + "- " + v.MergeSummary.Title + " [!" + v.MergeSummary.MergeId + "] — " + v.MergeSummary.Name + "  \n"
+		freshChangelog = freshChangelog + "- " + v.MergeSummary.Title + " [!" + v.MergeSummary.MergeId + "] — " + v.MergeSummary.Name + "\n"
 	}
 
 	freshChangelog = freshChangelog + "\n"
