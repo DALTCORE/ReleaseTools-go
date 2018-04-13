@@ -149,7 +149,7 @@ func BuildWholeChangelog(version string) {
 	freshChangelog = freshChangelog + "\n"
 
 	for _, v := range ParsedChangelogs {
-		freshChangelog = freshChangelog + "[!" + v.MergeSummary.MergeId + "]: <" + ConfigFile.GitlabUrl + "/" + ConfigFile().Repo + "/merge_requests/" + v.MergeSummary.MergeId + "> \"!" + v.MergeSummary.MergeId + "\"\n"
+		freshChangelog = freshChangelog + "[!" + v.MergeSummary.MergeId + "]: <" + ConfigFile().GitlabUrl + "/" + ConfigFile().Repo + "/merge_requests/" + v.MergeSummary.MergeId + "> \"!" + v.MergeSummary.MergeId + "\"\n"
 		os.Rename(ChangelogUnreleasedDirectory() + DirSep() + v.Filename, ChangelogReleasedDirectory() + DirSep() + v.Filename)
 	}
 
