@@ -26,6 +26,7 @@ type MergeRequestSummary struct {
 }
 
 type ConfigHolder struct {
+	GitlabUrl		  string `json:"gitlab_url"`
 	Group             string `json:"group"`
 	Repo              string `json:"repo"`
 	ApiUrl            string `json:"api_url"`
@@ -148,7 +149,7 @@ func BuildWholeChangelog(version string) {
 	freshChangelog = freshChangelog + "\n"
 
 	for _, v := range ParsedChangelogs {
-		freshChangelog = freshChangelog + "[!" + v.MergeSummary.MergeId + "]: <https://git.intothesource.com/" + ConfigFile().Repo + "/merge_requests/" + v.MergeSummary.MergeId + "> \"!" + v.MergeSummary.MergeId + "\"\n"
+		freshChangelog = freshChangelog + "[!" + v.MergeSummary.MergeId + "]: <" + ConfigFile.GitlabUrl + "/" + ConfigFile().Repo + "/merge_requests/" + v.MergeSummary.MergeId + "> \"!" + v.MergeSummary.MergeId + "\"\n"
 		os.Rename(ChangelogUnreleasedDirectory() + DirSep() + v.Filename, ChangelogReleasedDirectory() + DirSep() + v.Filename)
 	}
 

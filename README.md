@@ -220,6 +220,7 @@ repo: namespace/repo
 
 Home file example:
 ```yaml
+gitlab_url: #https://git.server.com (no slash at the end)
 group: #namespace
 api_url: #Gitlab.com/api/v4
 api_key: #RandomKey
