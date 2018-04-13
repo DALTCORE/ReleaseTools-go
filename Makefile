@@ -29,7 +29,7 @@ link:
 	if [ "$${BUILD_DIR_LINK}" != "$${CURRENT_DIR}" ]; then \
 	    echo "Fixing symlinks for build"; \
 	    rm -rf $${BUILD_DIR}; \
-	    cp -avr $${CURRENT_DIR}/src $${BUILD_DIR}; \
+	    cp -r $${CURRENT_DIR}/src $${BUILD_DIR}; \
 	fi
 
 version:
@@ -60,5 +60,6 @@ after:
 	rm -f ${TEST_REPORT}; \
 	rm -f ${BUILD_DIR}/vet.report; \
     rm -f ${BUILD_DIR}/*.go; \
+	rm -f ${BUILD_DIR}/*.goback; \
 
 .PHONY: link linux darwin windows test vet fmt clean
