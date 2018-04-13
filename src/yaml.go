@@ -1,18 +1,19 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"github.com/ghodss/yaml"
 	ioutil "io/ioutil"
-	"github.com/fatih/color"
 	"os"
 	"sort"
 	"strings"
 	"time"
-	"github.com/vigneshuvi/GoDateFormat"
-	"bufio"
+
+	"github.com/fatih/color"
+	"github.com/ghodss/yaml"
 	"github.com/imdario/mergo"
 	"github.com/olekukonko/tablewriter"
+	"github.com/vigneshuvi/GoDateFormat"
 )
 
 /**
@@ -26,7 +27,7 @@ type MergeRequestSummary struct {
 }
 
 type ConfigHolder struct {
-	GitlabUrl		  string `json:"gitlab_url"`
+	GitlabUrl         string `json:"gitlab_url"`
 	Group             string `json:"group"`
 	Repo              string `json:"repo"`
 	ApiUrl            string `json:"api_url"`
@@ -36,7 +37,7 @@ type ConfigHolder struct {
 }
 
 type Changelogs struct {
-	Filename string
+	Filename     string
 	MergeSummary MergeRequestSummary
 }
 
@@ -110,7 +111,7 @@ func BuildWholeChangelog(version string) {
 		}
 
 		ParsedChangelogs = append(ParsedChangelogs, Changelogs{
-			Filename: f.Name(),
+			Filename:     f.Name(),
 			MergeSummary: MrSum,
 		})
 	}
@@ -121,7 +122,7 @@ func BuildWholeChangelog(version string) {
 	}
 
 	today := time.Now()
-	todayString := today.Format(GoDateFormat.ConvertFormat("yyyy-mm-dd"));
+	todayString := today.Format(GoDateFormat.ConvertFormat("yyyy-mm-dd"))
 
 	freshChangelog := "## " + version + " (" + todayString + ")  \n"
 
@@ -150,13 +151,13 @@ func BuildWholeChangelog(version string) {
 
 	for _, v := range ParsedChangelogs {
 		freshChangelog = freshChangelog + "[!" + v.MergeSummary.MergeId + "]: <" + ConfigFile().GitlabUrl + "/" + ConfigFile().Repo + "/merge_requests/" + v.MergeSummary.MergeId + "> \"!" + v.MergeSummary.MergeId + "\"\n"
-		os.Rename(ChangelogUnreleasedDirectory() + DirSep() + v.Filename, ChangelogReleasedDirectory() + DirSep() + v.Filename)
+		os.Rename(ChangelogUnreleasedDirectory()+DirSep()+v.Filename, ChangelogReleasedDirectory()+DirSep()+v.Filename)
 	}
 
 	b, _ := ioutil.ReadFile(ChangelogFile()) // just pass the file name
 
 	if len(b) > 0 {
-		freshChangelog = freshChangelog + "\n\n" +  string(b)
+		freshChangelog = freshChangelog + "\n\n" + string(b)
 	}
 
 	f, err := os.Create(ChangelogFile())
@@ -183,6 +184,7 @@ func ListChangelogs() {
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"MR ID", "Author", "Entry", "Type"})
 	table.SetBorder(true)
+	table.SetColWidth(1000)
 
 	for _, f := range files {
 
@@ -208,6 +210,5 @@ func ListChangelogs() {
 	} else {
 		color.Red("No unreleased changelogs found!")
 	}
-
 
 }
