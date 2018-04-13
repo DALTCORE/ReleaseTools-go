@@ -29,12 +29,12 @@ link:
 	if [ "$${BUILD_DIR_LINK}" != "$${CURRENT_DIR}" ]; then \
 	    echo "Fixing symlinks for build"; \
 	    rm -rf $${BUILD_DIR}; \
-	    ln -s $${CURRENT_DIR}/src $${BUILD_DIR}; \
+	    cp -avr $${CURRENT_DIR}/src $${BUILD_DIR}; \
 	fi
 
 version:
 	cd ${BUILD_DIR}; \
-    sed -i "s/{{VERSION}}/${VERSION}/g" main.go;
+    sed -i"back" "s/{{VERSION}}/${VERSION}/g" main.go;
 
 linux: 
 	cd ${BUILD_DIR}; \
