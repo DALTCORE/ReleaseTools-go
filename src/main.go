@@ -380,7 +380,7 @@ func main() {
 					os.Exit(1)
 				}
 
-				var summary string = askQuestion(ASK_TITLE)
+				var summary string = askChangelogSummary()
 				fmt.Println("")
 				// var version string = askQuestion(ASK_VERSION)
 				var mergeType string = askMergeType()

@@ -13,6 +13,7 @@ type ErrNotFound struct {
 
 func ExecGit(args ...string) string {
 	gitArgs := args
+
 	var stdout bytes.Buffer
 	cmd := exec.Command("git", gitArgs...)
 
@@ -52,4 +53,8 @@ func GetCurrentBranch() string {
 	str = strings.Replace(str, "\\", "-", -1)
 
 	return str
+}
+
+func GetLastCommitMessage() string {
+	return ExecGit("log", "-1", "--pretty=%B")
 }

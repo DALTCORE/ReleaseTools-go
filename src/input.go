@@ -3,10 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/tcnksm/go-gitconfig"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/tcnksm/go-gitconfig"
 )
 
 /**
@@ -167,6 +168,24 @@ func askUsername() string {
 	name, _ := gitconfig.Username()
 
 	fmt.Print("What is your name [", name, "]: ")
+	text, _ := reader.ReadString('\n')
+
+	text = strings.Replace(text, "\r", "", -1)
+	text = strings.Replace(text, "\n", "", -1)
+
+	if len(text) < 3 {
+		text = name
+	}
+
+	return text
+}
+
+func askChangelogSummary() string {
+	reader := bufio.NewReader(os.Stdin)
+
+	name, _ := gitconfig.Username()
+
+	fmt.Print(ASK_TITLE+" [", GetLastCommitMessage(), "]: ")
 	text, _ := reader.ReadString('\n')
 
 	text = strings.Replace(text, "\r", "", -1)
