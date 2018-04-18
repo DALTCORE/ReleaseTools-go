@@ -183,7 +183,7 @@ func askUsername() string {
 func askChangelogSummary() string {
 	reader := bufio.NewReader(os.Stdin)
 
-	name, _ := gitconfig.Username()
+	name := GetLastCommitMessage()
 
 	fmt.Print(ASK_TITLE+" [", GetLastCommitMessage(), "]: ")
 	text, _ := reader.ReadString('\n')
