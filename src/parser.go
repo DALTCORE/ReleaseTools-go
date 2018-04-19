@@ -3,11 +3,12 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/spf13/viper"
 	ioutil "io/ioutil"
 	"os"
 	"strings"
+
 	"github.com/fatih/color"
+	"github.com/spf13/viper"
 )
 
 func ParsePlaybook(name string) bool {
@@ -57,15 +58,15 @@ func versionOneDotOne() {
 			mergeTitle := viper.GetString("playbook.gitlab.merge_request.title")
 
 			if strings.Contains(fromBranch, ":version") {
-				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
+				fromBranch = strings.Replace(fromBranch, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(toBranch, ":version") {
-				toBranch = strings.Replace(toBranch, ":version", askQuestion(ASK_VERSION), -1)
+				toBranch = strings.Replace(toBranch, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(mergeTitle, ":version") {
-				mergeTitle = strings.Replace(mergeTitle, ":version", askQuestion(ASK_VERSION), -1)
+				mergeTitle = strings.Replace(mergeTitle, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(mergeTitle, ":from") {
@@ -86,11 +87,11 @@ func versionOneDotOne() {
 			toBranch := viper.GetString("playbook.gitlab.make_branch.to")
 
 			if strings.Contains(fromBranch, ":version") {
-				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
+				fromBranch = strings.Replace(fromBranch, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(toBranch, ":version") {
-				toBranch = strings.Replace(toBranch, ":version", askQuestion(ASK_VERSION), -1)
+				toBranch = strings.Replace(toBranch, ":version", askVersion(), -1)
 			}
 
 			fmt.Println("Make branch from", fromBranch, "to", toBranch)
@@ -102,11 +103,11 @@ func versionOneDotOne() {
 			tagName := viper.GetString("playbook.gitlab.create_tag.name")
 
 			if strings.Contains(fromBranch, ":version") {
-				fromBranch = strings.Replace(fromBranch, ":version", askQuestion(ASK_VERSION), -1)
+				fromBranch = strings.Replace(fromBranch, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(tagName, ":version") {
-				tagName = strings.Replace(tagName, ":version", askQuestion(ASK_VERSION), -1)
+				tagName = strings.Replace(tagName, ":version", askVersion(), -1)
 			}
 
 			fmt.Println("Create tag from", fromBranch, "name:", tagName)
@@ -119,15 +120,14 @@ func versionOneDotOne() {
 			channel := viper.GetString("playbook.mattermost.notify.channel")
 			message := viper.GetString("playbook.mattermost.notify.message")
 
-
 			// Very specific for our usage for our usage
 			if strings.Contains(message, ":project") {
-				url := StringBefore(ConfigFile().Repo, "/");
+				url := StringBefore(ConfigFile().Repo, "/")
 				message = strings.Replace(message, ":project", url, -1)
 			}
 
 			if strings.Contains(message, ":version") {
-				message = strings.Replace(message, ":version", askQuestion(ASK_VERSION), -1)
+				message = strings.Replace(message, ":version", askVersion(), -1)
 			}
 
 			if strings.Contains(message, ":repo") {
@@ -135,7 +135,7 @@ func versionOneDotOne() {
 			}
 
 			fmt.Println("Notify channel", channel, "with message", message)
-			MattermostNotify(channel,message)
+			MattermostNotify(channel, message)
 		}
 	}
 }

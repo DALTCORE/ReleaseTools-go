@@ -107,14 +107,14 @@ func main() {
 				}
 
 				if strings.Contains(text, ":version") {
-					text = strings.Replace(text, ":version", askQuestion(ASK_VERSION), -1)
+					text = strings.Replace(text, ":version", askVersion(), -1)
 				}
 
 				if strings.Contains(text, ":repo") {
 					text = strings.Replace(text, ":repo", ConfigFile().Repo, -1)
 				}
 
-				Issue := GitlabMakeIssue(MergeType+" release of version v"+askQuestion(ASK_VERSION), text)
+				Issue := GitlabMakeIssue(MergeType+" release of version v"+askVersion(), text)
 
 				// fmt.Println(MergeType + " release of version v" + askQuestion(ASK_VERSION))
 				// fmt.Println(text)
@@ -142,7 +142,8 @@ func main() {
 				if c.Args().Get(0) != "" {
 					setAwnser(ASK_VERSION, c.Args().Get(0))
 				}
-				version := askQuestion(ASK_VERSION)
+
+				version := askVersion()
 
 				BuildWholeChangelog(version)
 				return nil

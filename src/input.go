@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	ioutil "io/ioutil"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -196,4 +198,59 @@ func askChangelogSummary() string {
 	}
 
 	return text
+}
+
+func askVersion() string {
+
+	if len(AskedQuestions) != 0 {
+		for index, _ := range AskedQuestions {
+			if AskedQuestions[index].question == ASK_VERSION {
+				active = false
+				return AskedQuestions[index].awnser
+			}
+		}
+	}
+
+	var re = regexp.MustCompile(`\#\#\s(?P<major>\d+).(?P<minor>\d+).(?P<hotfix>\d+)\s\((?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+)\)`)
+	b, _ := ioutil.ReadFile(ChangelogFile())
+	text := ""
+	name := ""
+
+	if len(b) > 0 {
+		str := string(b)
+		m := reSubMatchMap(re, str)
+
+		reader := bufio.NewReader(os.Stdin)
+
+		hotfix, _ := strconv.ParseInt(m["hotfix"], 0, 0)
+		newHotfixVersion := (1 + hotfix)
+
+		name := m["major"] + "." + m["minor"] + "." + strconv.Itoa(int(newHotfixVersion))
+		fmt.Print(ASK_VERSION+" [next in increment is '", name, "']: ")
+		text, _ = reader.ReadString('\n')
+	} else {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print(ASK_VERSION + ":")
+		text, _ = reader.ReadString('\n')
+	}
+
+	text = strings.Replace(text, "\r", "", -1)
+	text = strings.Replace(text, "\n", "", -1)
+
+	if len(text) < 3 {
+		text = name
+	}
+
+	return text
+}
+
+func reSubMatchMap(r *regexp.Regexp, str string) map[string]string {
+	match := r.FindStringSubmatch(str)
+	subMatchMap := make(map[string]string)
+	for i, name := range r.SubexpNames() {
+		if i != 0 {
+			subMatchMap[name] = match[i]
+		}
+	}
+	return subMatchMap
 }
