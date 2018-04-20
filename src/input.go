@@ -214,7 +214,6 @@ func askVersion() string {
 	var re = regexp.MustCompile(`\#\#\s(?P<major>\d+).(?P<minor>\d+).(?P<hotfix>\d+)\s\((?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+)\)`)
 	b, _ := ioutil.ReadFile(ChangelogFile())
 	text := ""
-	name := ""
 
 	if len(b) > 0 {
 		str := string(b)
@@ -226,8 +225,14 @@ func askVersion() string {
 		newHotfixVersion := (1 + hotfix)
 
 		name := m["major"] + "." + m["minor"] + "." + strconv.Itoa(int(newHotfixVersion))
+
 		fmt.Print(ASK_VERSION+" [next in increment is '", name, "']: ")
 		text, _ = reader.ReadString('\n')
+
+		if len(text) < 3 {
+			text = name
+		}
+
 	} else {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print(ASK_VERSION + ":")
@@ -238,8 +243,10 @@ func askVersion() string {
 	text = strings.Replace(text, "\n", "", -1)
 
 	if len(text) < 3 {
-		text = name
+		panic("No version number found!")
 	}
+
+	AskedQuestions = append(AskedQuestions, questions{ASK_VERSION, text})
 
 	return text
 }
