@@ -61,6 +61,7 @@ func GitlabMakeBranch(from string, to string) *gitlab.Branch {
 
 	return Branch
 }
+
 func GitlabMakeTag(from string, to string) *gitlab.Tag {
 	git := gitlab.NewClient(nil, ConfigFile().ApiKey)
 	git.SetBaseURL(ConfigFile().ApiUrl)

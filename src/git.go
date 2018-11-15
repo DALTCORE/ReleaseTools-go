@@ -56,5 +56,9 @@ func GetCurrentBranch() string {
 }
 
 func GetLastCommitMessage() string {
-	return ExecGit("log", "-1", "--pretty=%B")
+	str := ExecGit("log", "-1", "--pretty=%B")
+	if strings.HasPrefix(str, "Merge branch") {
+		return ""
+	}
+	return str
 }

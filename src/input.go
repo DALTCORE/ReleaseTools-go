@@ -133,7 +133,8 @@ func askMergeType() string {
 	if len(mergeRequestTypes) >= int(int64Index) {
 		return mergeRequestTypes[int64Index]
 	} else {
-		panic("Input is out of bounds!")
+		fmt.Println("\nYour input of", index, "is not valid for this list.\nTry again, bright light :-) :\n")
+		return askMergeType()
 	}
 }
 
@@ -159,7 +160,8 @@ func askReleaseType() string {
 	if len(mergeRequestTypes) >= int(int64Index) {
 		return mergeRequestTypes[int64Index]
 	} else {
-		panic("Input is out of bounds!")
+		fmt.Println("\nYour input of", index, "is not valid for this list.\nTry again, bright light :-) :\n")
+		return askReleaseType()
 	}
 }
 
@@ -243,7 +245,8 @@ func askVersion() string {
 	text = strings.Replace(text, "\n", "", -1)
 
 	if len(text) < 3 {
-		panic("No version number found!")
+		fmt.Println(fmt.Errorf("No version found in %s, faling back to 0.0.0", ChangelogFile()))
+		text = "0.0.0"
 	}
 
 	AskedQuestions = append(AskedQuestions, questions{ASK_VERSION, text})
