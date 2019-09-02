@@ -107,14 +107,14 @@ func askConfirmation() bool {
 
 func askMergeType() string {
 	mergeRequestTypes := [8]string{
+		"Added",
+		"Fixed",
+		"Changed",
+		"Deprecated",
+		"Removed",
+		"Security",
+		"Performance",
 		"Other",
-		"New feature",
-		"Bug fix",
-		"Feature change",
-		"New deprecation",
-		"Feature removal",
-		"Security fix",
-		"Style fix",
 	}
 
 	for index, element := range mergeRequestTypes {
