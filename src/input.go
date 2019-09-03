@@ -106,8 +106,9 @@ func askConfirmation() bool {
 }
 
 func askMergeType() string {
-	mergeRequestTypes := [8]string{
+	mergeRequestTypes := [9]string{
 		"Added",
+		"Reverted",
 		"Fixed",
 		"Changed",
 		"Deprecated",
@@ -122,7 +123,7 @@ func askMergeType() string {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("What is this merge request about? [0-7]: ")
+	fmt.Print("What is this merge request about? [0-9]: ")
 	index, _ := reader.ReadString('\n')
 
 	index = strings.Replace(index, "\r", "", -1)
