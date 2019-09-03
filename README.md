@@ -16,7 +16,7 @@ One-line install for lazy MacOS users:
 ```console
 $ mkdir -p ~/bin \
   && curl -L -o ~/bin/release-tool-darwin-amd64 \
-  https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.4/release-tool-darwin-amd64 \
+  https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.5/release-tool-darwin-amd64 \
   && chmod +x ~/bin/release-tool-darwin-amd64 \
   && ln -sfv ~/bin/release-tool-darwin-amd64 ~/bin/rt
 ```
@@ -29,7 +29,7 @@ One-line install for lazy Linux users:
 ```console
 $ mkdir -p ~/bin \
   && curl -L -o ~/bin/release-tool-linux-amd64 \
-  https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.4/release-tool-linux-amd64 \
+  https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.5/release-tool-linux-amd64 \
   && chmod +x ~/bin/release-tool-linux-amd64 \
   && ln -sfv ~/bin/release-tool-linux-amd64 ~/bin/rt
 ```
@@ -37,7 +37,7 @@ $ mkdir -p ~/bin \
 Make sure that you have pointed `~/bin` in your `$PATH`.
 
 ## Windows
-1. Download [release-tool-windows-amd64.exe](https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.4/release-tool-windows-amd64.exe)
+1. Download [release-tool-windows-amd64.exe](https://github.com/DALTCORE/ReleaseTools-go/releases/download/1.2.5/release-tool-windows-amd64.exe)
 and copy it to `C:\Users\<name>\bin` (create if directory does not exist yet!)  
 
 2. Rename the file to `release-tool.exe` or `rt.exe` 
