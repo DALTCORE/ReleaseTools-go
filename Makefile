@@ -21,15 +21,17 @@ build:
 
 post_build:
 	@echo
-	@echo "##################################"
-	@echo "    OUTPUT FOR THE GIT RELEASE"
-	@echo "##################################"
-	@echo "Version: ${VERSION}"
-	@echo "Build number: ${BUILD_NUMBER}"
-	@echo "Commit: ${COMMIT}"
+	@echo '##################################'
+	@echo '    OUTPUT FOR THE GIT RELEASE'
+	@echo '##################################'
+	@echo 'Version: `${VERSION}`'
+	@echo 'Build number: `${BUILD_NUMBER}`'
+	@echo 'Commit: `${COMMIT}`'
 	@echo
-	@echo "SHA512 sum:"
+	@echo 'SHA512 sum:'
+	@echo '```'
 	@cd ${BUILD_DIR} && sha512sum *
+	@echo '```'
 	@echo "##################################"
 
 clean:
