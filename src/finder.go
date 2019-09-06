@@ -1,12 +1,12 @@
 package main
 
 import (
-    "path/filepath"
-	"os"
-	"log"
 	"bytes"
-	"runtime"
 	"github.com/mitchellh/go-homedir"
+	"log"
+	"os"
+	"path/filepath"
+	"runtime"
 )
 
 func CurrentExecutablePath() string {
@@ -159,7 +159,6 @@ func ReleaseToolPlaybookDirectory() string {
 
 	return dir
 }
-
 
 func ChangelogFile() string {
 	var directory bytes.Buffer

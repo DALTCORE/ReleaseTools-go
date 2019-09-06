@@ -17,7 +17,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-const RTVERSION = "{{VERSION}}"
+var RTVERSION = "0.0.0-DEV"
 
 /**
  * Mainly main things

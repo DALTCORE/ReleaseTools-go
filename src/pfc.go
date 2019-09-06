@@ -1,48 +1,48 @@
 package main
 
 import (
-	"os"
 	"bytes"
 	"github.com/fatih/color"
+	"os"
 	"path/filepath"
 )
 
 func RunChecks() bool {
 
-	if ! CheckIfGitExists() {
-		return false;
+	if !CheckIfGitExists() {
+		return false
 	}
 
-	if ! CheckIfBranchIsSet() {
-		return false;
+	if !CheckIfBranchIsSet() {
+		return false
 	}
 
-	if ! CheckIfReleaseToolInit() {
-		return false;
+	if !CheckIfReleaseToolInit() {
+		return false
 	}
 
-	if ! CheckIfReleaseToolDirIsReady() {
-		return false;
+	if !CheckIfReleaseToolDirIsReady() {
+		return false
 	}
 
-	if ! CheckIfReleaseToolStubDirIsReady() {
-		return false;
+	if !CheckIfReleaseToolStubDirIsReady() {
+		return false
 	}
 
-	if ! CheckIfReleaseToolPlaybookDirIsReady() {
-		return false;
+	if !CheckIfReleaseToolPlaybookDirIsReady() {
+		return false
 	}
 
-	if ! CheckIfChangelogDirsAreReady() {
-		return false;
+	if !CheckIfChangelogDirsAreReady() {
+		return false
 	}
 
-	if ! CheckIfChangelogReleasedDirIsReady() {
-		return false;
+	if !CheckIfChangelogReleasedDirIsReady() {
+		return false
 	}
 
-	if ! CheckIfChangelogUnreleasedDirIsReady() {
-		return false;
+	if !CheckIfChangelogUnreleasedDirIsReady() {
+		return false
 	}
 
 	return true
@@ -72,7 +72,7 @@ func CheckIfBranchIsSet() bool {
 	}
 
 	color.Red("No... This cannot be done. A branch must be availible!")
-	return false;
+	return false
 }
 
 func CheckIfReleaseToolInit() bool {

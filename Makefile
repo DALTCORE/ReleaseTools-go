@@ -1,66 +1,53 @@
-# Borrowed from: 
-# https://github.com/silven/go-example/blob/master/Makefile
-# https://vic.demuzere.be/articles/golang-makefile-crosscompile/
+NAME=release-tool
+ROOT_DIR=$(shell pwd)
+BUILD_DIR=${ROOT_DIR}/build
+VERSION=$(shell cat VERSION)
+BUILD_NUMBER=$(shell cat BUILD)
+COMMIT=$(shell git rev-parse --short HEAD)
+LD_FLAGS="-X main.RTVERSION=${VERSION} -X main.NAME=${NAME}"
 
-BINARY = release-tool
-VET_REPORT = vet.report
-TEST_REPORT = tests.xml
-GOARCH = amd64
+.PHONY: all build clean fmt run bn
 
-VERSION?=1.2.6
+all: pre_build build post_build
 
-COMMIT=$(shell git rev-parse HEAD)
-BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+pre_build: bn clean fmt
+	echo ${BUILD_NUMBER}
 
-# Symlink into GOPATH
-BUILD_DIR=${GOPATH}build
-CURRENT_DIR=$(shell pwd)
-BUILD_DIR_LINK=$(shell readlink ${BUILD_DIR})
+build:
+	mkdir -p ${ROOT_DIR}/build
+	GOOS=linux GOARCH=amd64 go build -ldflags ${LD_FLAGS} -o ${ROOT_DIR}/build/${NAME}-linux-amd64 ${ROOT_DIR}/src/*.go
+	GOOS=windows GOARCH=amd64 go build -ldflags ${LD_FLAGS} -o ${ROOT_DIR}/build/${NAME}-windows-amd64.exe ${ROOT_DIR}/src/*.go
+	GOOS=darwin GOARCH=amd64 go build -ldflags ${LD_FLAGS} -o ${ROOT_DIR}/build/${NAME}-macos-amd64 ${ROOT_DIR}/src/*.go
 
-# Setup the -ldflags option for go build here, interpolate the variable values
-LDFLAGS = -ldflags "-X main.VERSION=${VERSION} -X main.COMMIT=${COMMIT} -X main.BRANCH=${BRANCH} -s -w"
-
-# Build the project
-all: link version clean vet linux darwin windows after
-
-link:
-	BUILD_DIR=${BUILD_DIR}; \
-	BUILD_DIR_LINK=${BUILD_DIR_LINK}; \
-	CURRENT_DIR=${CURRENT_DIR}; \
-	if [ "$${BUILD_DIR_LINK}" != "$${CURRENT_DIR}" ]; then \
-	    echo "Fixing symlinks for build"; \
-	    rm -rf $${BUILD_DIR}; \
-	    cp -r $${CURRENT_DIR}/src $${BUILD_DIR}; \
-	fi
-
-version:
-	cd ${BUILD_DIR}; \
-    sed -i"back" "s/{{VERSION}}/${VERSION}/g" main.go;
-
-linux: 
-	cd ${BUILD_DIR}; \
-	GOOS=linux GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-linux-${GOARCH} . ; \
-	cd - >/dev/null
-
-darwin:
-	cd ${BUILD_DIR}; \
-	GOOS=darwin GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-darwin-${GOARCH} . ; \
-	cd - >/dev/null
-
-windows:
-	cd ${BUILD_DIR}; \
-	GOOS=windows GOARCH=${GOARCH} go build ${LDFLAGS} -o ${BINARY}-windows-${GOARCH}.exe . ; \
-	cd - >/dev/null
+post_build:
+	@echo
+	@echo "##################################"
+	@echo "    OUTPUT FOR THE GIT RELEASE"
+	@echo "##################################"
+	@echo "Version: ${VERSION}"
+	@echo "Build number: ${BUILD_NUMBER}"
+	@echo "Commit: ${COMMIT}"
+	@echo
+	@echo "SHA512 sum:"
+	@cd ${BUILD_DIR} && sha512sum *
+	@echo "##################################"
 
 clean:
-	rm -f ${TEST_REPORT}; \
-	rm -f ${VET_REPORT}; \
-	rm -f ${BINARY}-*;
+	rm -rf ${ROOT_DIR}/build
 
-after:
-	rm -f ${TEST_REPORT}; \
-	rm -f ${BUILD_DIR}/vet.report; \
-    rm -f ${BUILD_DIR}/*.go; \
-	rm -f ${BUILD_DIR}/*.goback; \
+vet:
+	go vet ${ROOT_DIR}/src/*.go
 
-.PHONY: link linux darwin windows test vet fmt clean
+fmt:
+	go fmt ${ROOT_DIR}/src/*.go
+
+test:
+	go test ${ROOT_DIR}/src/*.go -v
+
+run:
+	go run ${ROOT_DIR}/src/*.go
+
+bn:
+	@echo "${BUILD_NUMBER} + 1" | bc > BUILD
+	@BUILD_NUMBER=${BUILD_NUMBER}
+

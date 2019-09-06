@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"github.com/google/go-github/github"
-	"runtime"
-	"os"
 	"github.com/fatih/color"
+	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
+	"os"
+	"runtime"
 )
 
 func getAssetByOs() string {
@@ -42,7 +42,7 @@ func getAssetDownloadUrl() string {
 
 	for _, element := range tags {
 		if RTVERSION == element.GetName() {
-			color.Red("%v", "Cannot update release-tool. Current version " + RTVERSION + " equals update version " + element.GetName())
+			color.Red("%v", "Cannot update release-tool. Current version "+RTVERSION+" equals update version "+element.GetName())
 			os.Exit(128)
 		}
 
